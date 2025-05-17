@@ -24,17 +24,24 @@ Ejecución del sistema
 Clonación del repositorio:
 # Clonar repositorio
 git clone https://github.com/wdv5/meteorologs.git
+
 cd weather-system
+
 Iniciar los contenedores:
 docker-compose up --build
 
 Verificación de servicios
 
 PostgresSQL: conectarse vía psql
+
 docker exec -it postgres psql -U ${POSTGRES_USER} -d ${POSTGRES_DB}
+
+
 Consultar datos:
 SELECT * FROM weather_logs LIMIT 10;
+
 RabbitMQ:
+
 - Acceder al dashboard: http://localhost:15672 (usuario: user, contraseña: password)
 - Verificar cola: weather_queue
 
@@ -46,17 +53,26 @@ docker logs -f consumer
  Salida esperada:
 Dato insertado: {'timestamp': '2025-05-17T04:21:09.957Z', 'temperatura': 2
 2.5, 'humedad': 45.0}
+
 Caso 2: Datos inválidos
+
 • Simular un mensaje con temperatura = 150°C:
+
 datos = {"timestamp": "2025-05-17T00:00:00Z", "temperatura": 150.0,
 "humedad": 50.0}
+
 Salida esperada en logs:
  Error de validación: Temperatura fuera de rango: 150.0
 
 Pruebas de Recuperación de Fallos
 1. Reinicio de PostgresSQl
+
 docker restart postgres
+
 El consumer debe reconectarse auticamente
+
 2. Caída de RabbitMQ:
+
 docker stop rabbitmq && docker start rabbitmq
+
 El producer reintenta enviar mensajes
