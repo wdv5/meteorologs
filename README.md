@@ -16,4 +16,4 @@ PostgreSQL: Almacena datos en la tabla weather_logs.
 ## Configuración
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/weather-monitoring-system.git
+   git clone https://github.com/wdv5/meteorologs.git
